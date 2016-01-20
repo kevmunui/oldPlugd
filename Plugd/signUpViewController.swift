@@ -61,6 +61,7 @@ class signUpViewController: UIViewController,UIImagePickerControllerDelegate, UI
         
     }
     
+    
     func displayAlertmsgPrompt(userMessage:String){
         
         let myAlert = UIAlertController(title: "Yo!", message: userMessage, preferredStyle:UIAlertControllerStyle.Alert)

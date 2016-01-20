@@ -50,32 +50,15 @@ class loginViewController: UIViewController {
     
     @IBAction func checker(sender: UIButton) {
         
-        var userEmail = userEmailTextField.text
+        let userEmail = userEmailTextField.text?.lowercaseString
         let userPassword = userPasswordTextField.text
         
-        
-        /*change username to lower case to help with clean log in*/
-        userEmail = userEmail?.lowercaseString
-        /*end function*/
-        
-        
         if userEmail!.isEmpty || userPassword!.isEmpty{
-            
             self.displayAlertmsg("All fields are required")
-            
-            
-            
         }else{
-            
-            
-            
-            
             PFUser.logInWithUsernameInBackground(userEmail!, password: userPassword!){
                 (user, NSError) ->Void in
-                
-                
                 if user != nil{
-                    
                     //device connection
                     
                     let installation: PFInstallation = PFInstallation.currentInstallation()
@@ -83,42 +66,17 @@ class loginViewController: UIViewController {
                     installation["user"] = PFUser.currentUser()
                     installation.saveInBackground()
                     
-                    
                     //login is sucessfull
                     NSUserDefaults.standardUserDefaults().setBool(true, forKey: "isUserLoggedIn")
                     NSUserDefaults.standardUserDefaults().synchronize()
-                    
                     self.performSegueWithIdentifier("logintomain", sender: self)
-                    
                 } else{
-                    
                     let errorString = NSError!.userInfo["error"] as? NSString
                     self.displayAlertmsg("\(errorString!)")
-                    
                 }
-                
             }
         }
-        
-        
-
-        
-        
     }
-   
-
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-    
-    
     func DismissKeyboard(){
         //Causes the view (or one of its embedded text fields) to resign the first responder status.
         view.endEditing(true)
